@@ -8,6 +8,8 @@ import {
   Building2,
   Home,
   Bot,
+  Target,
+  TrendingUp,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -23,6 +25,8 @@ interface Project {
   frontend: string[];
   backend: string[];
   highlights: string[];
+  challenge?: string;
+  outcome?: string;
   link?: string;
   iconType?: "building" | "home" | "ai";
 }
@@ -36,6 +40,10 @@ const projects: Project[] = [
       "A comprehensive healthcare application designed to streamline patient care and medical data management. Worked on complex features spanning both frontend and backend, implementing robust data visualization, rich text editing, and secure authentication systems.",
     role: "Full-Stack Engineer",
     isConfidential: true,
+    challenge:
+      "The client faced an aggressive release cadence requiring fast implementation with high confidence in quality. They needed scalable features across the full stack while managing growing user feedback that demanded tight regression coverage and faster issue resolution. Manual healthcare processes were bottlenecked by Excel-based workflows.",
+    outcome:
+      "Transformed Excel-based healthcare workflows into a fully automated digital platform, significantly reducing manual data entry and human error. Delivered features on an accelerated timeline while maintaining code quality through monorepo architecture. Improved system reliability and enabled faster feature iterations.",
     frontend: [
       "React",
       "TypeScript",
@@ -49,14 +57,11 @@ const projects: Project[] = [
     ],
     backend: ["NestJS", "MongoDB", "FastAPI"],
     highlights: [
-      "Built a comprehensive healthcare platform with a focus on patient care and medical data management",
-      "Refactored the codeBase to be monorepo structure using TurboRepo",
-      "Developed a robust backend system using NestJS and FastAPI to handle complex data operations and integrations",
-      "Integrated Auth0 for secure authentication and authorization",
-      "Developed efficient data fetching patterns with React Query",
-      "Developed a robust backend system using NestJS and FastAPI to handle complex data operations and integrations",
-      "Implemented a scalable and modular architecture using the Clean Architecture pattern",
-      "Integrated Auth0 for secure authentication and authorization",
+      "Migrated manual Excel processes to automated digital workflows",
+      "Refactored codebase to monorepo structure using TurboRepo for faster builds",
+      "Built dual backend system (NestJS + FastAPI) for complex data operations",
+      "Implemented Tableau integration for real-time data visualization",
+      "Developed rich text medical documentation with Lexical Editor",
     ],
   },
   {
@@ -68,6 +73,10 @@ const projects: Project[] = [
     role: "AI / Full-Stack Engineer",
     iconType: "ai",
     images: ["/projects/nimblr-time.png"],
+    challenge:
+      "Traditional software development workflows required extensive manual coordination between research, strategy, design, and implementation phases. Teams spent significant time on repetitive tasks like market research synthesis, requirements gathering, and documentation—slowing down the entire product development lifecycle.",
+    outcome:
+      "Built an intelligent orchestration layer that automates complex multi-phase workflows, reducing manual coordination overhead by enabling AI agents to handle research, analysis, and documentation autonomously. The platform now powers end-to-end product development cycles with seamless Jira/Confluence integration for complete traceability.",
     frontend: ["TypeScript", "CLI Tools"],
     backend: [
       "Node.js",
@@ -97,6 +106,10 @@ const projects: Project[] = [
       "/projects/rent-3.png",
       "/projects/rent-4.png",
     ],
+    challenge:
+      "The rental market lacked a modern, user-friendly platform that combined intuitive property discovery with comprehensive management tools. Existing solutions offered fragmented experiences—forcing users to juggle multiple apps for searching, applications, and payments while landlords struggled with outdated property management interfaces.",
+    outcome:
+      "Delivered an end-to-end rental platform that streamlines the entire rental journey. Users can discover properties via interactive maps, apply seamlessly, and manage payments in one place. Landlords gained a powerful dashboard for tenant management, billing history, and property analytics—all deployed on scalable AWS infrastructure.",
     frontend: ["Next.js", "Tailwind CSS", "shadcn/ui", "AWS Cognito"],
     backend: ["Express.js", "PostgreSQL", "AWS"],
     highlights: [
@@ -208,6 +221,38 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <p className="text-surface-400 leading-relaxed mb-6">
           {project.description}
         </p>
+
+        {/* Challenge & Outcome */}
+        {(project.challenge || project.outcome) && (
+          <div className="space-y-4 mb-6">
+            {project.challenge && (
+              <div className="p-4 rounded-xl bg-surface-800/30 border border-surface-700/50">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target size={16} className="text-amber-500" />
+                  <span className="text-amber-500 text-xs font-mono uppercase tracking-wider">
+                    Challenge
+                  </span>
+                </div>
+                <p className="text-surface-400 text-sm leading-relaxed">
+                  {project.challenge}
+                </p>
+              </div>
+            )}
+            {project.outcome && (
+              <div className="p-4 rounded-xl bg-accent/5 border border-accent/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <TrendingUp size={16} className="text-green-500" />
+                  <span className="text-green-500 text-xs font-mono uppercase tracking-wider">
+                    Outcome & Impact
+                  </span>
+                </div>
+                <p className="text-surface-300 text-sm leading-relaxed">
+                  {project.outcome}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Tech Stack */}
         <div className="space-y-4 mb-6">
