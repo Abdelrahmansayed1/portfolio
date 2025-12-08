@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Building2,
   Home,
+  Bot,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -23,6 +24,7 @@ interface Project {
   backend: string[];
   highlights: string[];
   link?: string;
+  iconType?: "building" | "home" | "ai";
 }
 
 const projects: Project[] = [
@@ -45,13 +47,41 @@ const projects: Project[] = [
       "Tableau Integration",
       "Auth0",
     ],
-    backend: ["NestJS", "MongoDB"],
+    backend: ["NestJS", "MongoDB", "FastAPI"],
     highlights: [
-      "Built complex data visualization dashboards with Tableau integration",
-      "Implemented rich text editing with Lexical for medical documentation",
-      "Architected scalable monorepo structure using TurboRepo",
+      "Built a comprehensive healthcare platform with a focus on patient care and medical data management",
+      "Refactored the codeBase to be monorepo structure using TurboRepo",
+      "Developed a robust backend system using NestJS and FastAPI to handle complex data operations and integrations",
       "Integrated Auth0 for secure authentication and authorization",
       "Developed efficient data fetching patterns with React Query",
+      "Developed a robust backend system using NestJS and FastAPI to handle complex data operations and integrations",
+      "Implemented a scalable and modular architecture using the Clean Architecture pattern",
+      "Integrated Auth0 for secure authentication and authorization",
+    ],
+  },
+  {
+    id: "nimblr-time",
+    title: "Nimblr Time",
+    subtitle: "AI Agent Orchestration Platform",
+    description:
+      "An AI-native time management platform coordinating 15 specialized AI agents across automated workflows. Built a multi-agent orchestration system that handles research, strategy, marketing, design, and presentation generation through intelligent agent coordination with Jira/Confluence integration.",
+    role: "AI / Full-Stack Engineer",
+    iconType: "ai",
+    images: ["/projects/nimblr-time.png"],
+    frontend: ["TypeScript", "CLI Tools"],
+    backend: [
+      "Node.js",
+      "Claude AI (Anthropic)",
+      "Docker",
+      "Jira API",
+      "Confluence API",
+    ],
+    highlights: [
+      "Architected multi-agent orchestration system with 15 specialized AI agents",
+      "Built 3 workflow templates: Pre-development, Development, Post-production",
+      "Integrated Claude AI for intelligent agent execution and coordination",
+      "Developed real-time Jira/Confluence integration for automated ticket management",
+      "Containerized agent execution environment using Docker",
     ],
   },
   {
@@ -76,6 +106,7 @@ const projects: Project[] = [
       "Developed property management system for landlords",
       "Deployed scalable infrastructure on AWS",
     ],
+    link: "https://github.com/Abdelrahmansayed1/Rentai",
   },
 ];
 
@@ -151,7 +182,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className={isEven ? "" : "lg:col-start-2"}>
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2 bg-accent/10 rounded-lg text-accent">
-            {project.isConfidential ? (
+            {project.iconType === "ai" ? (
+              <Bot size={20} />
+            ) : project.isConfidential ? (
               <Building2 size={20} />
             ) : (
               <Home size={20} />
@@ -212,7 +245,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
         {/* Highlights */}
         <div className="space-y-2 mb-6">
-          {project.highlights.slice(0, 3).map((highlight, i) => (
+          {project.highlights.slice(0, 5).map((highlight, i) => (
             <div key={i} className="flex items-start gap-2 text-surface-400">
               <ChevronRight
                 size={16}
@@ -238,7 +271,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       {/* Visual */}
       <div className={isEven ? "" : "lg:col-start-1 lg:row-start-1"}>
         {project.isConfidential ? (
-          <ConfidentialPlaceholder />
+          <ConfidentialPlaceholder isAI={project.iconType === "ai"} />
         ) : (
           <ProjectGallery images={project.images || []} title={project.title} />
         )}
@@ -247,7 +280,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-function ConfidentialPlaceholder() {
+function ConfidentialPlaceholder({ isAI = false }: { isAI?: boolean }) {
   return (
     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden glass border-surface-800">
       <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-surface-900/50 to-surface-800/50" />
@@ -268,14 +301,19 @@ function ConfidentialPlaceholder() {
 
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
         <div className="p-4 bg-surface-800/50 rounded-full mb-4">
-          <Lock size={32} className="text-surface-500" />
+          {isAI ? (
+            <Bot size={32} className="text-surface-500" />
+          ) : (
+            <Lock size={32} className="text-surface-500" />
+          )}
         </div>
         <h4 className="font-display text-xl text-surface-300 mb-2">
-          Confidential Project
+          {isAI ? "AI Platform" : "Confidential Project"}
         </h4>
         <p className="text-surface-500 text-sm max-w-xs">
-          Due to NDA requirements, screenshots of this healthcare application
-          cannot be shared publicly.
+          {isAI
+            ? "This AI agent orchestration platform runs in backend environments. Visual demos available upon request."
+            : "Due to NDA requirements, screenshots of this application cannot be shared publicly."}
         </p>
       </div>
 
