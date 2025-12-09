@@ -10,6 +10,7 @@ import {
   Bot,
   Target,
   TrendingUp,
+  MapPin,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -19,6 +20,7 @@ interface Project {
   subtitle: string;
   description: string;
   role: string;
+  location: string;
   isConfidential?: boolean;
   companyLogo?: string;
   images?: string[];
@@ -33,12 +35,13 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "wellnecity",
-    title: "Wellnecity",
-    subtitle: "Healthcare Platform",
+    id: "healthcare-platform",
+    title: "Healthcare Platform",
+    subtitle: "Enterprise Health Tech",
     description:
       "A comprehensive healthcare application designed to streamline patient care and medical data management. Worked on complex features spanning both frontend and backend, implementing robust data visualization, rich text editing, and secure authentication systems.",
     role: "Full-Stack Engineer",
+    location: "USA · Remote",
     isConfidential: true,
     challenge:
       "The client faced an aggressive release cadence requiring fast implementation with high confidence in quality. They needed scalable features across the full stack while managing growing user feedback that demanded tight regression coverage and faster issue resolution. Manual healthcare processes were bottlenecked by Excel-based workflows.",
@@ -71,6 +74,7 @@ const projects: Project[] = [
     description:
       "An AI-native time management platform coordinating 15 specialized AI agents across automated workflows. Built a multi-agent orchestration system that handles research, strategy, marketing, design, and presentation generation through intelligent agent coordination with Jira/Confluence integration.",
     role: "AI / Full-Stack Engineer",
+    location: "USA · Remote",
     iconType: "ai",
     images: ["/projects/nimblr-time.png"],
     challenge:
@@ -100,6 +104,7 @@ const projects: Project[] = [
     description:
       "A full-featured rental property platform enabling users to discover, filter, and book properties with an intuitive map-based interface. Features include property management dashboards, payment integration, and real-time availability tracking.",
     role: "Full-Stack Engineer",
+    location: "Egypt · Remote",
     images: [
       "/projects/rent-1.png",
       "/projects/rent-2.png",
@@ -214,9 +219,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
         </div>
 
-        <h3 className="font-display text-3xl md:text-4xl text-white mb-4">
+        <h3 className="font-display text-3xl md:text-4xl text-white mb-2">
           {project.title}
         </h3>
+
+        <div className="flex items-center gap-4 mb-4 text-sm">
+          <span className="text-accent font-medium">{project.role}</span>
+          <span className="flex items-center gap-1 text-surface-500">
+            <MapPin size={14} />
+            {project.location}
+          </span>
+        </div>
 
         <p className="text-surface-400 leading-relaxed mb-6">
           {project.description}
